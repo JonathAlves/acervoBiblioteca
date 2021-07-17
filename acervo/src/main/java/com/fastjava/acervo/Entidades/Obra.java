@@ -7,7 +7,12 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * @author grupo 1
@@ -21,17 +26,23 @@ public class Obra {
 	private Long id;
 	@Column(name = "NOME", length = 240, nullable = false)
 	private String nomeDaObra;
-	@Column(name = "NOME", length = 240, nullable = false)
+	@Column(name = "DESCRICAO", length = 240, nullable = false)
 	private String descricao;
-	@Column(name = "NOME", nullable = false)
+	@Column(name = "DATA", nullable = false)
 	private Date dataPublicacao;
-	@Column(name = "AUTORES")
+	@ElementCollection
 	private List<Autor> autores = new ArrayList<>();
 	/**
 	 * 
 	 */
-	public Obra() {
-		// TODO Auto-generated constructor stub
+	
+	public Obra() {}
+	
+	public Obra(String nome, String descricaoObra, Date data, List<Autor> autores) {
+		this.nomeDaObra = nome;
+		this.descricao = descricaoObra;
+		this.dataPublicacao = data;	
+		this.autores = autores;
 	}
 	/**
 	 * @return the nomeDaObra
@@ -76,6 +87,12 @@ public class Obra {
 		return id;
 	}
 	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+	/**
 	 * @return the autores
 	 */
 	public List<Autor> getAutores() {
@@ -86,8 +103,11 @@ public class Obra {
 		autores.add(autor);
 	}
 	
+	public void removerAutor(Autor autor) {
+		autores.remove(autor);
+	}
+	
 	public String toString() {
-
 	    StringBuilder sb = new StringBuilder();
 	    sb.append("Id Obra: " + id);
 	    sb.append("\nNome da Obra: "+ nomeDaObra);

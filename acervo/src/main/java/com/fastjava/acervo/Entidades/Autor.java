@@ -21,7 +21,7 @@ public class Autor {
 	private String nome;
 	@Column(name = "PAÍS", nullable = false)
 	private String nacionalidade;
-	@Column(name = "DATA DE NASCIMENTO", nullable = false)
+	@Column(name = "DATA", nullable = false)
 	private Date nascimento;
 	@Column(name = "CPF")
 	private String cpf;
@@ -30,6 +30,16 @@ public class Autor {
 	 */
 	public Autor() {
 		// TODO Auto-generated constructor stub
+	}
+	/**
+	 * @param nome
+	 * @param nacionalidade
+	 * @param nascimento
+	 */
+	public Autor(String nome, String nacionalidade, Date nascimento) {
+		this.nome = nome;
+		this.nacionalidade = nacionalidade;
+		this.nascimento = nascimento;
 	}
 	/**
 	 * @return the nome
@@ -84,7 +94,4 @@ public class Autor {
 		return "Autor [id=" + id + ", nome=" + nome + ", nacionalidade=" + nacionalidade + ", nascimento=" + nascimento
 				+ ", cpf=" + cpf + "]";
 	}
-	
-	
-	
 }
