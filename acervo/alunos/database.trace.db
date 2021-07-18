@@ -1,0 +1,3 @@
+2021-07-17 16:43:49 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM OBRA OBRA OBRA_AUTORES[*]"; SQL statement:
+SELECT * FROM OBRA OBRA OBRA_AUTORES [42000-200]

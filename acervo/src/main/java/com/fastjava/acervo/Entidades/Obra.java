@@ -7,12 +7,13 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * @author grupo 1
@@ -30,8 +31,8 @@ public class Obra {
 	private String descricao;
 	@Column(name = "DATA", nullable = false)
 	private Date dataPublicacao;
-	@ElementCollection
-	private List<Autor> autores = new ArrayList<>();
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<Autor> autores = new ArrayList<>(); 
 	/**
 	 * 
 	 */
