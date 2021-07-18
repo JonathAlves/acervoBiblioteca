@@ -4,8 +4,16 @@
 package com.fastjava.acervo.Entidades;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * @author grupo 1
@@ -25,6 +33,8 @@ public class Autor {
 	private Date nascimento;
 	@Column(name = "CPF")
 	private String cpf;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Obra> obras = new ArrayList<>();
 	/**
 	 * 
 	 */
@@ -89,9 +99,14 @@ public class Autor {
 	public String getCpf() {
 		return cpf;
 	}
+	
+	public void insereObra(Obra obra) {
+		obras.add(obra);
+	}
 	@Override
 	public String toString() {
 		return "Autor [id=" + id + ", nome=" + nome + ", nacionalidade=" + nacionalidade + ", nascimento=" + nascimento
-				+ ", cpf=" + cpf + "]";
+				+ ", cpf=" + cpf + ", obras=" + obras + "]";
 	}
+	
 }

@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.fastjava.acervo.Excessoes.ExcessaoObraNaoEncontrada;
 
 @ControllerAdvice
-public class AvisoObraNaoEncontrada {
+class AvisoObraNaoEncontrada {
 	
 	@ResponseBody
 	@ExceptionHandler(ExcessaoObraNaoEncontrada.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	String employeeNotFoundHandler(ExcessaoObraNaoEncontrada ex) {
 		return ex.getMessage();
 	}

@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.fastjava.acervo.Excessoes.ExcessaoAutorNaoEncontrado;
 
 @ControllerAdvice
-public class AvisoAutorNaoEncontrado {
+class AvisoAutorNaoEncontrado {
 	
 	@ResponseBody
 	@ExceptionHandler(ExcessaoAutorNaoEncontrado.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	String employeeNotFoundHandler(ExcessaoAutorNaoEncontrado ex) {
 		return ex.getMessage();
 	}
