@@ -6,6 +6,7 @@ package com.fastjava.acervo.Entidades;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,10 +47,11 @@ public class Autor {
 	 * @param nacionalidade
 	 * @param nascimento
 	 */
-	public Autor(String nome, String nacionalidade, Date nascimento) {
+	public Autor(String nome, String nacionalidade, Date nascimento, List<Obra> obras) {
 		this.nome = nome;
 		this.nacionalidade = nacionalidade;
 		this.nascimento = nascimento;
+		this.obras = obras;
 	}
 	/**
 	 * @return the nome
@@ -102,6 +104,20 @@ public class Autor {
 	
 	public void insereObra(Obra obra) {
 		obras.add(obra);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cpf, nome);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Autor))
+			return false;
+		Autor other = (Autor) obj;
+		return Objects.equals(cpf, other.cpf) && Objects.equals(nome, other.nome);
 	}
 	@Override
 	public String toString() {

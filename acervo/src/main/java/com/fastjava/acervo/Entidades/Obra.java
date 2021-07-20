@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fastjava.acervo.Excessoes.ExcessaoObraNaoEncontrada;
+
 /**
  * @author grupo 1
  *
