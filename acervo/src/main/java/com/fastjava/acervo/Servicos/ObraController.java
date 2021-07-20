@@ -19,6 +19,7 @@ import com.fastjava.acervo.Entidades.Autor;
 import com.fastjava.acervo.Entidades.Obra;
 import com.fastjava.acervo.Excessoes.ExcessaoCpfNulo;
 import com.fastjava.acervo.Excessoes.ExcessaoObraNaoEncontrada;
+import com.fastjava.acervo.Repositorios.IAutorRepositorio;
 import com.fastjava.acervo.Repositorios.IObraRepositorio;
 
 /**
@@ -31,7 +32,7 @@ public class ObraController {
 	
 	private final IObraRepositorio obraRepositorio;
 	private List<Autor> autores = new ArrayList<>();
-	
+	private IAutorRepositorio autorRepositorio;
 	//Construtor 
 	public ObraController(IObraRepositorio repositorio) {
 		this.obraRepositorio = repositorio;
@@ -45,8 +46,13 @@ public class ObraController {
 			if(autor.getNacionalidade().equalsIgnoreCase("Brasil") && autor.getCpf() == null) {
 				throw new ExcessaoCpfNulo();
 			}
+//			if(autorRepositorio.existsById(obra.getId())) {
+//				throw new ExcessaoCpfNulo();
+//			}
 			autor.insereObra(obra);
 		}
+		
+		
 		return obraRepositorio.save(obra);
 	}
 	
