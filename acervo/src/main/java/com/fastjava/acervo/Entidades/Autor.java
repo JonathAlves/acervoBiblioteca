@@ -6,7 +6,6 @@ package com.fastjava.acervo.Entidades;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,7 +34,7 @@ public class Autor {
 	@Column(name = "CPF")
 	private String cpf;
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Obra> obras = new ArrayList<>();
+	private List<ObrasAutor> obrasAutor = new ArrayList<>();
 	/**
 	 * 
 	 */
@@ -47,11 +46,11 @@ public class Autor {
 	 * @param nacionalidade
 	 * @param nascimento
 	 */
-	public Autor(String nome, String nacionalidade, Date nascimento, List<Obra> obras) {
+	public Autor(String nome, String nacionalidade, Date nascimento, List<ObrasAutor> obrasAutor) {
 		this.nome = nome;
 		this.nacionalidade = nacionalidade;
 		this.nascimento = nascimento;
-		this.obras = obras;
+		this.obrasAutor = obrasAutor;
 	}
 	/**
 	 * @return the nome
@@ -102,14 +101,25 @@ public class Autor {
 		return cpf;
 	}
 	
-	public void insereObra(Obra obra) {
-		obras.add(obra);
+	/**
+	 * @return the obras
+	 */
+	public List<ObrasAutor> getObras() {
+		return obrasAutor;
+	}
+	
+
+	/**
+	 * @param cpf the cpf to set
+	 */
+	public void insereObra(ObrasAutor obras) {
+		obrasAutor.add(obras);
 	}
 
 	@Override
 	public String toString() {
 		return "Autor [id=" + id + ", nome=" + nome + ", nacionalidade=" + nacionalidade + ", nascimento=" + nascimento
-				+ ", cpf=" + cpf + ", obras=" + obras + "]";
+				+ ", cpf=" + cpf + ", obras=" + obrasAutor + "]";
 	}
 	
 }

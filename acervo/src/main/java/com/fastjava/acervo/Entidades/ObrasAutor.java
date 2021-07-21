@@ -4,26 +4,22 @@
 package com.fastjava.acervo.Entidades;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  * @author grupo 1
  *
  */
 @Entity
-public class Obra {
+public class ObrasAutor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", nullable = false)
+	@Column(name = "ID")
 	private Long id;
 	@Column(name = "NOME", length = 240, nullable = false)
 	private String nomeDaObra;
@@ -31,21 +27,18 @@ public class Obra {
 	private String descricao;
 	@Column(name = "DATA", nullable = false)
 	private Date dataPublicacao;
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Autor> autores = new ArrayList<>();
 
 	/**
 	 * 
 	 */
 
-	public Obra() {
+	public ObrasAutor() {
 	}
 
-	public Obra(String nome, String descricaoObra, Date data, List<Autor> autores) {
+	public ObrasAutor(String nome, String descricaoObra, Date data) {
 		this.nomeDaObra = nome;
 		this.descricao = descricaoObra;
 		this.dataPublicacao = data;
-		this.autores = autores;
 	}
 
 	/**
@@ -104,28 +97,12 @@ public class Obra {
 		this.id = id;
 	}
 
-	/**
-	 * @return the autores
-	 */
-	public List<Autor> getAutores() {
-		return autores;
-	}
-
-	public void addAutor(Autor autor) {
-		autores.add(autor);
-	}
-
-	public void removerAutor(Autor autor) {
-		autores.remove(autor);
-	}
-
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Id Obra: " + id);
 		sb.append("\nNome da Obra: " + nomeDaObra);
 		sb.append("\nDescrição: " + descricao);
 		sb.append("\nData de Publicacao: " + dataPublicacao);
-		sb.append("\nAutores: " + autores);
 
 		return sb.toString();
 	}
