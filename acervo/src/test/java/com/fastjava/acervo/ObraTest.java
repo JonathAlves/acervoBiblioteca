@@ -32,7 +32,7 @@ public class ObraTest {
 	}
 
 	private Autor addAutorMock(Integer id) {
-		return new Autor("Nome" + id, "nacionalidade" + id, Date.valueOf(LocalDate.now()));
+		return new Autor("Nome" + id, "nacionalidade" + id, Date.valueOf(LocalDate.now()), obras);
 
 	}
 

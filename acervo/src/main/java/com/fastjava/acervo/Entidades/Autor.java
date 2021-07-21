@@ -107,19 +107,6 @@ public class Autor {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(cpf, nome);
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof Autor))
-			return false;
-		Autor other = (Autor) obj;
-		return Objects.equals(cpf, other.cpf) && Objects.equals(nome, other.nome);
-	}
-	@Override
 	public String toString() {
 		return "Autor [id=" + id + ", nome=" + nome + ", nacionalidade=" + nacionalidade + ", nascimento=" + nascimento
 				+ ", cpf=" + cpf + ", obras=" + obras + "]";
