@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fastjava.acervo.Entidades.Autor;
 import com.fastjava.acervo.Entidades.Obra;
+import com.fastjava.acervo.Entidades.ObrasAutor;
 import com.fastjava.acervo.Excessoes.ExcessaoCpfNulo;
 import com.fastjava.acervo.Excessoes.ExcessaoObraNaoEncontrada;
 import com.fastjava.acervo.Repositorios.IAutorRepositorio;
@@ -34,7 +35,8 @@ public class ObraController {
 	private final IAutorRepositorio autorRepositorio;
 	private List<Autor> autores = new ArrayList<>();
 	private List<Autor> autoresExistentes = new ArrayList<>();
-	
+	private ObrasAutor obrasAutor = new ObrasAutor();
+
 
 	// Construtor
 	public ObraController(IObraRepositorio repositorio, IAutorRepositorio repoAutor) {
@@ -43,29 +45,18 @@ public class ObraController {
 	}
 
 	// Cadastra uma nova obra no sistema incluindo a obra cadastrada em numa lista
-	// correspondente a um autor. (Não aparece no postman)
+	// correspondente a um autor.
 	@PostMapping("/obras")
 	public Obra cadastraObra(@RequestBody Obra obra) {
-		int cont = 0;
+		int contador = 0;
 		autores = obra.getAutores();
 		autoresExistentes = autorRepositorio.findAll();
+		obrasAutor.setNomeDaObra(obra.getNomeDaObra());
+		obrasAutor.setDescricao(obra.getDescricao());
+		obrasAutor.setDataPublicacao(obra.getDataPublicacao());
 		for (Autor autor : autores) {
-			
-			verificaCPF(autor);
-			for(Autor autorBanco : autoresExistentes) {
-				if(autorBanco.getCpf().equals(autor.getCpf())) {
-					cont++;
-				}
-			}
-			if(cont > 0) {
-				cont = 0;
-				continue;
-			}else {
-				cont = 0;
-				autor.insereObra(obra);
-				
-			}
-			System.out.println(autor);
+			verificaCPF(autor);		
+			autor.insereObra(obrasAutor);
 			autorRepositorio.save(autor);
 		}
 

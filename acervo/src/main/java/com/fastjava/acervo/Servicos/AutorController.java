@@ -5,6 +5,7 @@ package com.fastjava.acervo.Servicos;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,5 +41,15 @@ public class AutorController {
 	}
 	
 	
+	@DeleteMapping("/autores/{id}")
+	public void deletaAutores(@PathVariable Long id) {
+		autorRepositorio.deleteById(id);
+	}
+	
+	
+	@DeleteMapping("/autores")
+	public void deletaAutores() {
+		autorRepositorio.deleteAll();
+	}
 	
 }
