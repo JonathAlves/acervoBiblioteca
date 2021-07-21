@@ -33,7 +33,7 @@ public class Obra {
 	private String descricao;
 	@Column(name = "DATA", nullable = false)
 	private Date dataPublicacao;
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Autor> autores = new ArrayList<>(); 
 	/**
 	 * 

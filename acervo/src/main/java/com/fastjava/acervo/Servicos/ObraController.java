@@ -29,64 +29,87 @@ import com.fastjava.acervo.Repositorios.IObraRepositorio;
 @RequestMapping("/Acervo")
 @RestController
 public class ObraController {
-	
+
 	private final IObraRepositorio obraRepositorio;
+	private final IAutorRepositorio autorRepositorio;
 	private List<Autor> autores = new ArrayList<>();
-	private IAutorRepositorio autorRepositorio;
-	//Construtor 
-	public ObraController(IObraRepositorio repositorio) {
+	private List<Autor> autoresExistentes = new ArrayList<>();
+	
+
+	// Construtor
+	public ObraController(IObraRepositorio repositorio, IAutorRepositorio repoAutor) {
 		this.obraRepositorio = repositorio;
+		this.autorRepositorio = repoAutor;
 	}
 
-	//Cadastra uma nova obra no sistema incluindo a obra cadastrada em numa lista correspondente a um autor. (Não aparece no postman)
+	// Cadastra uma nova obra no sistema incluindo a obra cadastrada em numa lista
+	// correspondente a um autor. (Não aparece no postman)
 	@PostMapping("/obras")
-	public Obra cadastraObra(@RequestBody Obra obra){
-		autores = obra.getAutores(); 
-		for(Autor autor : autores) {
-			if(autor.getNacionalidade().equalsIgnoreCase("Brasil") && autor.getCpf() == null) {
-				throw new ExcessaoCpfNulo();
+	public Obra cadastraObra(@RequestBody Obra obra) {
+		int cont = 0;
+		autores = obra.getAutores();
+		autoresExistentes = autorRepositorio.findAll();
+		for (Autor autor : autores) {
+			
+			verificaCPF(autor);
+			for(Autor autorBanco : autoresExistentes) {
+				if(autorBanco.getCpf().equals(autor.getCpf())) {
+					cont++;
+				}
 			}
-//			if(autorRepositorio.existsById(obra.getId())) {
-//				throw new ExcessaoCpfNulo();
-//			}
-			autor.insereObra(obra);
+			if(cont > 0) {
+				cont = 0;
+				continue;
+			}else {
+				cont = 0;
+				autor.insereObra(obra);
+				
+			}
+			System.out.println(autor);
+			autorRepositorio.save(autor);
 		}
-		
-		
+
 		return obraRepositorio.save(obra);
 	}
-	
-	//Lista todas as obras cadastradas
+
+	// Lista todas as obras cadastradas
 	@GetMapping("/obras")
-	public List<Obra> listaObras(){
+	public List<Obra> listaObras() {
 		return obraRepositorio.findAll();
 	}
-	
+
 	@GetMapping("/obras/{id}")
 	public Obra buscaObra(@PathVariable Long id) {
-		return obraRepositorio.findById(id)
-				.orElseThrow(() -> new ExcessaoObraNaoEncontrada(id));
+		return obraRepositorio.findById(id).orElseThrow(() -> new ExcessaoObraNaoEncontrada(id));
 	}
-	
+
 	@PutMapping("/obras/{id}")
 	public Obra editaObra(@RequestBody Obra novaObra, @PathVariable Long id) {
-		return obraRepositorio.findById(id)
-				.map(obra -> {
-					obra.setNomeDaObra(novaObra.getNomeDaObra());
-					obra.setDescricao(novaObra.getDescricao());
-					obra.setDataPublicacao(novaObra.getDataPublicacao());
-					obra.addAutor(new Autor());
-					return obraRepositorio.save(obra);
-				})
-				.orElseGet(() -> {
-					novaObra.setId(id);
-					return obraRepositorio.save(novaObra);
-				});
+		return obraRepositorio.findById(id).map(obra -> {
+			obra.setNomeDaObra(novaObra.getNomeDaObra());
+			obra.setDescricao(novaObra.getDescricao());
+			obra.setDataPublicacao(novaObra.getDataPublicacao());
+			obra.addAutor(new Autor());
+			return obraRepositorio.save(obra);
+		}).orElseGet(() -> {
+			novaObra.setId(id);
+			return obraRepositorio.save(novaObra);
+		});
 	}
-	
+
 	@DeleteMapping("/obras/{id}")
 	public void deletarObra(@PathVariable Long id) {
 		obraRepositorio.deleteById(id);
 	}
-	
+
+	@DeleteMapping("/obras")
+	public void deletaObras() {
+		obraRepositorio.deleteAll();
+	}
+
+	public void verificaCPF(Autor autor) {
+		if (autor.getNacionalidade().equalsIgnoreCase("Brasil") && autor.getCpf() == null) {
+			throw new ExcessaoCpfNulo();
+		}
+	}
 }
