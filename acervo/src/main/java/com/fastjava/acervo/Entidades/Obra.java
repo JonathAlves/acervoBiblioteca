@@ -23,7 +23,7 @@ import javax.persistence.OneToMany;
 public class Obra {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", nullable = false)
+	@Column(name = "ID", unique = true, nullable = false) 
 	private Long id;
 	@Column(name = "NOME", length = 240, nullable = false)
 	private String nomeDaObra;
@@ -31,8 +31,8 @@ public class Obra {
 	private String descricao;
 	@Column(name = "DATA", nullable = false)
 	private Date dataPublicacao;
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Autor> autores = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL) 
+	private List<Autor> autores = new ArrayList<>(); 
 
 	/**
 	 * 
@@ -109,6 +109,13 @@ public class Obra {
 	 */
 	public List<Autor> getAutores() {
 		return autores;
+	}
+
+	/**
+	 * @param autores the autores to set
+	 */
+	public void setAutores(List<Autor> autores) {
+		this.autores = autores;
 	}
 
 	public void addAutor(Autor autor) {
