@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-class AvisoAutorNaoEncontrado {
+public class AvisoErro404 {
 	
 	@ResponseBody
-	@ExceptionHandler(ExcessaoAutorNaoEncontrado.class)
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	String employeeNotFoundHandler(ExcessaoAutorNaoEncontrado ex) {
+	@ExceptionHandler(ExcessaoErro404.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	String employeeNotFoundHandler(ExcessaoErro404 ex) {
 		return ex.getMessage();
 	}
 }

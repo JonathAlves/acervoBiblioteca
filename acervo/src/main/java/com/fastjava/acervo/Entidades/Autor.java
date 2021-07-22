@@ -27,9 +27,9 @@ public class Autor {
 	private Long id;
 	@Column(name = "NOME", length = 120, nullable = false)
 	private String nome;
-	@Column(name = "PAÍS", nullable = false)
+	@Column(name = "PAÍS")
 	private String nacionalidade;
-	@Column(name = "DATA", nullable = false)
+	@Column(name = "DATA")
 	private Date nascimento;
 	@Column(name = "CPF")
 	private String cpf;
@@ -101,6 +101,12 @@ public class Autor {
 		return cpf;
 	}
 	
+	/**
+	 * @param cpf the cpf to set
+	 */
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 	/**
 	 * @return the obras
 	 */
